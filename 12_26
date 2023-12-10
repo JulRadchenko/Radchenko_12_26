@@ -4,10 +4,12 @@ import random
 from decimal import Decimal
 import decimal as de
 
+# Создание матрицы х ранга k
 k = random.randint(2,10)
 x = np.random.uniform(-1,1, (k,k))
 print(x)
 
+# Ввод точности t 
 print('Введите число t (точность):')
 t = int(input())
 d = 0
@@ -16,19 +18,21 @@ z = 1
 S = de.Decimal(0)
 n = 2
 
+# Цикл суммы знакопеременного ряда
 while d < t:
-    if n % 2 == 0:
-        c = c * (n - 1)
-        z = z * (n - 1)
-        S = de.Decimal(S) + de.Decimal(np.linalg.det(c))/z
-        d = abs(S.as_tuple().exponent)
+    if n % 2 == 0: # Слагаемые на четных позициях
+        c = c * (n - 1) # Факториал числителя
+        z = z * (n - 1) # Факториал знаменателя
+        S = de.Decimal(S) + de.Decimal(np.linalg.det(c))/z # Сумма
+        d = abs(S.as_tuple().exponent) # Вычисление текущей точности
         n += 1
         print('s1:', S, 'd', d)
-    else:
-        c = c * (n - 1)
-        z = z * (n - 1)
-        S = de.Decimal(S) - de.Decimal(np.linalg.det(c))/z
-        d = abs(S.as_tuple().exponent)
+    else: # Слагаемые на нечетных позициях
+        c = c * (n - 1) # Факториал числителя
+        z = z * (n - 1) # Факториал знаменателя
+        S = de.Decimal(S) - de.Decimal(np.linalg.det(c))/z # Сумма
+        d = abs(S.as_tuple().exponent) # Вычисление текущей точности
         n += 1
         print('s2:', S, 'd', d)
-print(f"{S:.{t}f}")
+
+print(f"{S:.{t}f}") # Вывод результата
